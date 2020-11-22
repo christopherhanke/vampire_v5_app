@@ -1,9 +1,11 @@
+import json
 from random import randint
 
-class Vampire:
+class Vampire(json.JSONEncoder):
     clans = ["Brujah", "Gangrel", "Malkavian", "Nosferatu", "Toreador", "Tremere", "Ventrue"]
     
-    attributes = {
+    # setting up standard dictionaries for attributes etc
+    __attributes = {
         "Strength": None,
         "Dexterity": None,
         "Stamina": None,
@@ -15,7 +17,7 @@ class Vampire:
         "Resolve": None
     }
     
-    skills = {
+    __skills = {
         "Athletics": None,
         "Brawl": None,
         "Craft": None,
@@ -47,7 +49,7 @@ class Vampire:
         "Technology": None
     }
 
-    disciplines = {
+    __disciplines = {
         "Animalism": None,
         "Auspex": None,
         "Blood Sorcery": None,
@@ -58,6 +60,33 @@ class Vampire:
         "Potence": None,
         "Presence": None
     }
+
+    __health = {"total": None, "superficial": None, "aggravated": None}
+    __willpower = {"total": None, "superficial": None, "aggravated": None}
+    __hunger = None
+    __humanity = None
+    
+
+    def get_keys_of_attributes(self):
+        keys_of_attributes = self.__attributes.keys()
+        return keys_of_attributes
+
+    def get_keys_of_skills(self):
+        keys_of_skills = self.__skills.keys()
+        return keys_of_skills
+
+    def get_keys_of_disciplines(self):
+        keys_of_disciplines = self.__disciplines.keys()
+        return keys_of_disciplines
+
+    def __init__(self):
+        pass
+    
+
+    # constructor method
+    @classmethod
+    def new_Vampire(cls):
+        return cls()
 
 
 class Dices:
