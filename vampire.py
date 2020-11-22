@@ -1,3 +1,5 @@
+from random import randint
+
 class Vampire:
     clans = ["Brujah", "Gangrel", "Malkavian", "Nosferatu", "Toreador", "Tremere", "Ventrue"]
     
@@ -58,5 +60,20 @@ class Vampire:
     }
 
 
+class Dices:
+    
+    def __d10(self):
+        return randint(1,10)
+    
 
-alex = Vampire()
+    def d10(self, x=1):
+        """
+        roll d10 x times, without arg it rolls once
+        returns list of results
+        """
+        result = []
+        for _ in range (x):
+            result.append(self.__d10())
+        
+        return result
+
