@@ -1,4 +1,4 @@
-# Fan Application for Vampire - The Masquerade (TR)
+# Fan Application for Vampire - The Masquerade
 Original Game by White Wolf / Paradox Interactive. The game is under their ownership and intellectual property. This project runs as part of the "Dark Pack" (see license).
 
 todo:

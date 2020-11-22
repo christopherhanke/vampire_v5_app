@@ -2,8 +2,10 @@ import json
 from random import randint
 
 class Vampire(json.JSONEncoder):
-    # setting up static lists or key lists
+    # static lists
     clans = ["Brujah", "Gangrel", "Malkavian", "Nosferatu", "Toreador", "Tremere", "Ventrue"]
+    
+    # static key lists
     keys_attributes = ["Strength", "Dexterity", "Stamina", "Charisma", "Manipulation", "Composure", "Intelligence", "Wits", "Resolve"]
     keys_disciplines = ["Animalism", "Auspex", "Blood Sorcery", "Celerity", "Dominate", "Fortitude", "Obfuscate", "Potence", "Presence"]
     keys_skills = [
@@ -26,7 +28,11 @@ class Vampire(json.JSONEncoder):
     
     # getter methods for instance variables
     def get_attribute(self, attribute):
-        return self.__attributes.get(attribute)
+        if attribute in self.keys_attributes:
+            return self.__attributes.get(attribute)
+        else:
+            print(f"There is no such attribute: {attribute}")
+            return 0
     
     def get_skill(self, skill):
         if skill in self.keys_skills:
@@ -36,7 +42,11 @@ class Vampire(json.JSONEncoder):
             return 0
 
     def get_discipline(self, discipline):
-        return self.__disciplines.get(discipline, 0)
+        if discipline in self.keys_disciplines:
+            return self.__disciplines.get(discipline, 0)
+        else:
+            print(f"There is no such discipline: {discipline}")
+            return 0
     
     def get_hunger(self):
         return self.__hunger
