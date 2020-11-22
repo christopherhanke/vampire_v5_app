@@ -2,12 +2,20 @@ import json
 from random import randint
 
 class Vampire(json.JSONEncoder):
-    # static lists
-    clans = ["Brujah", "Gangrel", "Malkavian", "Nosferatu", "Toreador", "Tremere", "Ventrue"]
+    # static dictionary for the clans and their clan-disciplines
+    clans = {
+        "Brujah": ["Celerity", "Potence", "Presence"],
+        "Gangrel": ["Animalism", "Fortitude", "Protean"],
+        "Malkavian": ["Auspex", "Dominate", "Obfuscate"],
+        "Nosferatu": ["Animalism", "Obfuscate", "Potence"],
+        "Toreador": ["Auspex", "Celerity", "Presence"],
+        "Tremere": ["Auspex", "Blood Sorcery", "Dominate"],
+        "Ventrue": ["Dominate", "Fortitude", "Presence"]
+    }
     
     # static key lists
     keys_attributes = ["Strength", "Dexterity", "Stamina", "Charisma", "Manipulation", "Composure", "Intelligence", "Wits", "Resolve"]
-    keys_disciplines = ["Animalism", "Auspex", "Blood Sorcery", "Celerity", "Dominate", "Fortitude", "Obfuscate", "Potence", "Presence"]
+    keys_disciplines = ["Animalism", "Auspex", "Blood Sorcery", "Celerity", "Dominate", "Fortitude", "Obfuscate", "Potence", "Presence", "Protean"]
     keys_skills = [
         "Athletics", "Brawl", "Craft", "Drive", "Firearms", "Larceny", "Melee", "Stealth", "Survival", 
         "Animal Ken", "Etiquette", "Insight", "Intimidation", "Leadership", "Performance", "Persuasion", "Streetwise", "Subterfuge", 
@@ -67,32 +75,63 @@ class Vampire(json.JSONEncoder):
 
     # setter methods for instance variables
     def set_attribute(self, attribute, value):
+        """
+        attribute = key for attribute
+        value = value of attribute
+        """
         if attribute in self.keys_attributes:
             self.__attributes[attribute] = value
         else:
             print(f"{attribute} is not valid")
     
     def set_skill(self, skill, value):
+        """
+        skill = key for skill
+        value = value of the skill
+        """
         if skill in self.keys_skills:
             self.__skills[skill] = value
         else:
             print(f"{skill} is not valid")
     
     def set_discipline(self, discipline, value):
+        """
+        discipline = key for discipline
+        value = value of the discipline
+        """
         if discipline in self.keys_disciplines:
             self.__disciplines[discipline] = value
         else:
             print(f"{discipline} is not valid")
-
-
-    def __init__(self):
-        pass
     
+    def set_clan(self, clan):
+        """
+        clan = clan name
+        """
+        if clan in self.clans.keys():
+            self.__clan = clan
+        else:
+            print(f"{clan} is not valid")
 
-    # constructor method
+
+    # setting __init__ for constructors
+    def __init__(self, **kwargs):
+        if "file" in kwargs:
+            #TODO
+            print(f"File to get... {kwargs['file']}")
+        else:
+            print("Embrace begins... ")
+
+
+    # classmethods for constructors
     @classmethod
     def new_Vampire(cls):
         return cls()
+
+    @classmethod
+    def new_Vampire_from_file(cls, text):
+        return cls(file=text)
+
 
 
 class Vampire_Dices:
