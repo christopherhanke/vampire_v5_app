@@ -3,7 +3,7 @@ from vampire import Vampire, Vampire_Dices
 
 @pytest.fixture
 def vamp():
-    vamp = Vampire()
+    vamp = Vampire.new_Vampire()
     attr = vamp.keys_attributes[1]
     vamp.set_attribute(attr, 2)
     yield vamp
