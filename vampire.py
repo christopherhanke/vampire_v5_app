@@ -2,82 +2,58 @@ import json
 from random import randint
 
 class Vampire(json.JSONEncoder):
+    # setting up static lists or key lists
     clans = ["Brujah", "Gangrel", "Malkavian", "Nosferatu", "Toreador", "Tremere", "Ventrue"]
+    keys_attributes = ["Strength", "Dexterity", "Stamina", "Charisma", "Manipulation", "Composure", "Intelligence", "Wits", "Resolve"]
+    keys_disciplines = ["Animalism", "Auspex", "Blood Sorcery", "Celerity", "Dominate", "Fortitude", "Obfuscate", "Potence", "Presence"]
+    keys_skills = [
+        "Athletics", "Brawl", "Craft", "Drive", "Firearms", "Larceny", "Melee", "Stealth", "Survival", 
+        "Animal Ken", "Etiquette", "Insight", "Intimidation", "Leadership", "Performance", "Persuasion", "Streetwise", "Subterfuge", 
+        "Academics", "Awareness", "Finance", "Investigation", "Medicine", "Occult", "Politics", "Science", "Technology"
+    ]
     
-    # setting up standard dictionaries for attributes etc
-    __attributes = {
-        "Strength": None,
-        "Dexterity": None,
-        "Stamina": None,
-        "Charisma": None,
-        "Manipulation": None,
-        "Composure": None,
-        "Intelligence": None,
-        "Wits": None,
-        "Resolve": None
-    }
-    
-    __skills = {
-        "Athletics": None,
-        "Brawl": None,
-        "Craft": None,
-        "Drive": None,
-        "Firearms": None,
-        "Larceny": None,
-        "Melee": None,
-        "Stealth": None,
-        "Survival": None,
 
-        "Animal Ken": None,
-        "Etiquette": None,
-        "Insight": None,
-        "Intimidation": None,
-        "Leadership": None,
-        "Performance": None,
-        "Persuasion": None,
-        "Streetwise": None,
-        "Subterfuge": None,
-
-        "Academics": None,
-        "Awareness": None,
-        "Finance": None,
-        "Investigation": None,
-        "Medicine": None,
-        "Occult": None,
-        "Politics": None,
-        "Science": None,
-        "Technology": None
-    }
-
-    __disciplines = {
-        "Animalism": None,
-        "Auspex": None,
-        "Blood Sorcery": None,
-        "Celerity": None,
-        "Dominate": None,
-        "Fortitude": None,
-        "Obfuscate": None,
-        "Potence": None,
-        "Presence": None
-    }
-
+    # instance variables
+    __clan = ""
+    __attributes = {}
+    __skills = {}
+    __disciplines = {}
     __health = {"total": None, "superficial": None, "aggravated": None}
     __willpower = {"total": None, "superficial": None, "aggravated": None}
     __hunger = None
     __humanity = None
+
     
+    # getter methods for instance variables
+    def get_attribute(self, attribute):
+        return self.__attributes.get(attribute)
+    
+    def get_skill(self, skill):
+        if skill in self.keys_skills:
+            return self.__skills.get(skill, 0)
+        else:
+            print(f"There is no such skill: {skill}")
+            return 0
 
-    def get_keys_of_attributes(self):
-        keys_of_attributes = self.__attributes.keys()
-        return keys_of_attributes
-
-    def get_keys_of_skills(self):
-        keys_of_skills = self.__skills.keys()
-        return keys_of_skills
-
-    def get_keys_of_disciplines(self):
-        keys_of_disciplines = self.__disciplines.keys()
-        return keys_of_disciplines
+    def get_discipline(self, discipline):
+        return self.__disciplines.get(discipline, 0)
+    
+    def get_hunger(self):
+        return self.__hunger
+    
+    def get_humanity(self):
+        return self.__humanity
+    
+    def get_willpower(self):
+        total = self.__willpower.get("total", 0)
+        superficial = self.__willpower("superficial", 0)
+        aggravated = self.__willpower("aggravated", 0)
+        if total > (superficial + aggravated):
+            current = total - (superficial + aggravated)
+        else:
+            current = 0
+        return current
+        
 
     def __init__(self):
         pass
@@ -89,7 +65,7 @@ class Vampire(json.JSONEncoder):
         return cls()
 
 
-class Dices:
+class Vampire_Dices:
     
     def __d10(self):
         return randint(1,10)
@@ -105,4 +81,3 @@ class Dices:
             result.append(self.__d10())
         
         return result
-

@@ -3,8 +3,10 @@ import vampire
 alex = vampire.Vampire()
 chris = vampire.Vampire.new_Vampire()
 
-for key in alex.get_keys_of_attributes():
+for key in alex.keys_attributes:
     print(key)
 
-my_dice = vampire.Dices()
+print(chris.get_skill("Firearms"))
+
+my_dice = vampire.Vampire_Dices()
 print(my_dice.d10(10))
