@@ -63,7 +63,27 @@ class Vampire(json.JSONEncoder):
         else:
             current = 0
         return current
-        
+    
+
+    # setter methods for instance variables
+    def set_attribute(self, attribute, value):
+        if attribute in self.keys_attributes:
+            self.__attributes[attribute] = value
+        else:
+            print(f"{attribute} is not valid")
+    
+    def set_skill(self, skill, value):
+        if skill in self.keys_skills:
+            self.__skills[skill] = value
+        else:
+            print(f"{skill} is not valid")
+    
+    def set_discipline(self, discipline, value):
+        if discipline in self.keys_disciplines:
+            self.__disciplines[discipline] = value
+        else:
+            print(f"{discipline} is not valid")
+
 
     def __init__(self):
         pass
