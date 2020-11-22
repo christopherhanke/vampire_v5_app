@@ -2,11 +2,11 @@ import pytest
 from vampire import Vampire, Vampire_Dices
 
 @pytest.fixture
-def vampire():
+def vamp():
     vamp = Vampire()
     attr = vamp.keys_attributes[1]
     vamp.set_attribute(attr, 2)
-
+    yield vamp
 
 @pytest.fixture
 def dice():
@@ -26,9 +26,16 @@ def test_dice_num():
             assert False
     assert True
 
-def test_vampire_skill_firearm():
+
+def test_vampire_skill_default():
     vamp = Vampire().get_skill("Firearms")
     if vamp != None:
         assert True
     else:
         assert False
+
+
+def test_vampire(vamp):
+    attr = vamp.get_attribute(vamp.keys_attributes[1])
+    assert attr == 2
+
