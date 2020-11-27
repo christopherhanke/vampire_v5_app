@@ -9,6 +9,11 @@ def vamp():
     yield vamp
 
 @pytest.fixture
+def vamp_file():
+    vamp_file = Vampire.new_Vampire_from_file("file_name_here")
+    yield vamp_file
+
+@pytest.fixture
 def dice():
     dice = Vampire_Dices()
     yield dice
@@ -39,3 +44,7 @@ def test_vampire(vamp):
     attr = vamp.get_attribute(vamp.keys_attributes[1])
     assert attr == 2
 
+
+def test_vampire_file(vamp_file, capsys):
+    out, err = capsys.readouterr()
+    # TODO get the printout tested - out is empty now    

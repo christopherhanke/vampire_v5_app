@@ -72,6 +72,16 @@ class Vampire(json.JSONEncoder):
             current = 0
         return current
     
+    def get_health(self):
+        total = self.__health.get("total", 0)
+        superficial = self.__health.get("superficial", 0)
+        aggravated = self.__helath.get("aggravated", 0)
+        if total > (superficial + aggravated):
+            current = total - (superficial + aggravated)
+        else:
+            current = 0
+        return current
+    
 
     # setter methods for instance variables
     def set_attribute(self, attribute, value):
@@ -121,16 +131,28 @@ class Vampire(json.JSONEncoder):
             print(f"File to get... {kwargs['file']}")
         else:
             print("Embrace begins... ")
+            self.__new_Vampire()
+    
+    def __new_Vampire(self):
+            print("Welcome")
+            # TODO: get all data for a Vampire Character
 
 
     # classmethods for constructors
     @classmethod
     def new_Vampire(cls):
+        """
+        Constructor: initialize a new Vampire
+        """
         return cls()
 
     @classmethod
-    def new_Vampire_from_file(cls, text):
-        return cls(file=text)
+    def new_Vampire_from_file(cls, file):
+        """
+        Constructor: initialize a Vampire from file
+        file contains path to file
+        """
+        return cls(file=file)
 
 
 
