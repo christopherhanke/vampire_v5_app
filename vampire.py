@@ -10,7 +10,8 @@ class Vampire(json.JSONEncoder):
         "Nosferatu": ["Animalism", "Obfuscate", "Potence"],
         "Toreador": ["Auspex", "Celerity", "Presence"],
         "Tremere": ["Auspex", "Blood Sorcery", "Dominate"],
-        "Ventrue": ["Dominate", "Fortitude", "Presence"]
+        "Ventrue": ["Dominate", "Fortitude", "Presence"],
+        "Caitiff": []
     }
     
     # static key lists
@@ -124,6 +125,28 @@ class Vampire(json.JSONEncoder):
             print(f"{clan} is not valid")
 
 
+    def __d10(self):
+        return randint(1,10)
+    
+    def d10(self, x=1):
+        """
+        roll d10 x times, without arg it rolls once
+        returns list of results
+        """
+        result = []
+        for _ in range (x):
+            result.append(self.__d10())
+        
+        return result
+
+    def rouse_check(self):
+        check = self.__d10()
+        if check < 6 and self.get_hunger() < 5:
+            self.__hunger += 1
+        elif check < 6 and self.get_hunger >= 5:
+            raise Exception()
+
+
     # setting __init__ for constructors
     def __init__(self, **kwargs):
         if "file" in kwargs:
@@ -131,12 +154,7 @@ class Vampire(json.JSONEncoder):
             print(f"File to get... {kwargs['file']}")
         else:
             print("Embrace begins... ")
-            self.__new_Vampire()
     
-    def __new_Vampire(self):
-            print("Welcome")
-            # TODO: get all data for a Vampire Character
-
 
     # classmethods for constructors
     @classmethod
@@ -153,22 +171,4 @@ class Vampire(json.JSONEncoder):
         file contains path to file
         """
         return cls(file=file)
-
-
-
-class Vampire_Dices:
     
-    def __d10(self):
-        return randint(1,10)
-    
-
-    def d10(self, x=1):
-        """
-        roll d10 x times, without arg it rolls once
-        returns list of results
-        """
-        result = []
-        for _ in range (x):
-            result.append(self.__d10())
-        
-        return result
