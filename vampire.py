@@ -36,6 +36,9 @@ class Vampire(json.JSONEncoder):
 
     
     # getter methods for instance variables
+    def get_clan(self):
+        return self.__clan
+    
     def get_attribute(self, attribute):
         if attribute in self.keys_attributes:
             return self.__attributes.get(attribute)
