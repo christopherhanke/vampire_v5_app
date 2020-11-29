@@ -23,7 +23,6 @@ class Vampire(json.JSONEncoder):
         "Academics", "Awareness", "Finance", "Investigation", "Medicine", "Occult", "Politics", "Science", "Technology"
     ]
     
-
     # instance variables
     __clan = ""
     __attributes = {}
@@ -39,6 +38,7 @@ class Vampire(json.JSONEncoder):
     def get_clan(self):
         return self.__clan
     
+
     def get_attribute(self, attribute):
         if attribute in self.keys_attributes:
             return self.__attributes.get(attribute)
@@ -46,12 +46,14 @@ class Vampire(json.JSONEncoder):
             print(f"There is no such attribute: {attribute}")
             return 0
     
+
     def get_skill(self, skill):
         if skill in self.keys_skills:
             return self.__skills.get(skill, 0)
         else:
             print(f"There is no such skill: {skill}")
             return 0
+
 
     def get_discipline(self, discipline):
         if discipline in self.keys_disciplines:
@@ -60,12 +62,15 @@ class Vampire(json.JSONEncoder):
             print(f"There is no such discipline: {discipline}")
             return 0
     
+
     def get_hunger(self):
         return self.__hunger
     
+
     def get_humanity(self):
         return self.__humanity
     
+
     def get_willpower(self):
         total = self.__willpower.get("total", 0)
         superficial = self.__willpower("superficial", 0)
@@ -76,6 +81,7 @@ class Vampire(json.JSONEncoder):
             current = 0
         return current
     
+
     def get_health(self):
         total = self.__health.get("total", 0)
         superficial = self.__health.get("superficial", 0)
@@ -98,6 +104,7 @@ class Vampire(json.JSONEncoder):
         else:
             print(f"{attribute} is not valid")
     
+
     def set_skill(self, skill, value):
         """
         skill = key for skill
@@ -108,6 +115,7 @@ class Vampire(json.JSONEncoder):
         else:
             print(f"{skill} is not valid")
     
+
     def set_discipline(self, discipline, value):
         """
         discipline = key for discipline
@@ -118,6 +126,7 @@ class Vampire(json.JSONEncoder):
         else:
             print(f"{discipline} is not valid")
     
+
     def set_clan(self, clan):
         """
         clan = clan name
@@ -131,6 +140,7 @@ class Vampire(json.JSONEncoder):
     def __d10(self):
         return randint(1,10)
     
+
     def d10(self, x=1):
         """
         roll d10 x times, without arg it rolls once
@@ -141,6 +151,7 @@ class Vampire(json.JSONEncoder):
             result.append(self.__d10())
         
         return result
+
 
     def rouse_check(self):
         check = self.__d10()
@@ -167,6 +178,7 @@ class Vampire(json.JSONEncoder):
         """
         return cls()
 
+    
     @classmethod
     def new_Vampire_from_file(cls, file):
         """
