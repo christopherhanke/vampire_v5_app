@@ -20,12 +20,8 @@ def new_vampire():
     print("You'll have nine attributes with a range from one (1) to a later maximum of five (5).")
     print("At the beginning you can choose one attribute at four (1x 4), three times three (3x 3), \nfour times two (4x 2) and one attribute at one (1x 1).")
     print("The attributes are:")
-    for item in Vampire.keys_attributes:
-        if item in Vampire.keys_attributes[:2] or item in Vampire.keys_attributes[3:5] or item in Vampire.keys_attributes[6:8]:
-            print(item, end=", ")
-        else:
-            print(item)
-    
+    print_attributes()
+    print()
     i = 0
     attr = [4, 3, 3, 3, 2, 2, 2, 2, 1]
     while i in range(len(Vampire.keys_attributes)):
@@ -42,9 +38,57 @@ def new_vampire():
             print(f"Invalid value. {attr}")
     
     # step three - set skills
+    print("\n\n3. Set your skill")
+    print("You can choose out of a list of 27 skills. Skills you learned \nare in range of one (1) to a later maximum of five (5)")
+    print("At the beginning you can choose three skills at three (3x 3), five times two (5x 2) and seven times one (7x 1).")
+    print("The skills are:")
+    print_skills()
+    print()
+    i = 0
+    skl = [3, 3, 3, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1]
+    while len(skl) != 0:
+        skill = input("Choose a skill: ")
+        if skill == "help":
+            print_skills()
+        elif not skill in Vampire.keys_skills:
+            print("Skill not valid. Enter 'help' for list of skills.")
+            continue
+        elif skill in Vampire.keys_skills and vampire.get_skill(skill):
+            print(f"You already chose {skill} with {vampire.get_skill(skill)} points.")
+        else:
+            try:
+                value = int(input(f"Set level for {skill}: "))
+            except ValueError:
+                value = 0
+            if value in skl:
+                vampire.set_skill(skill, value)
+                skl.remove(value)
+            else:
+                print(f"Invaldi value. {skl}")
     
+    # set specials
+    # TODO
+
+    # step four - set disciplines
+    print("\n\n4. Set your disciplines")
+    print("You can choose two disciplines of the given list. One takes two points and the other one point.")
+
+    # step five - choose hunting trait
+    # TODO
+
+    # step six - choose vantages
+    # TODO
     
 
+def print_attributes():
+    for x in range(3):
+        print(f"{'{:<15}'.format(Vampire.keys_attributes[x])} | {'{:<15}'.format(Vampire.keys_attributes[x+3])} | {'{:<15}'.format(Vampire.keys_attributes[x+6])}")
+
+
+def print_skills():
+    for x in range(9):
+        print(f"{'{:<15}'.format(Vampire.keys_skills[x])} | {'{:<15}'.format(Vampire.keys_skills[x+9])} | {'{:<15}'.format(Vampire.keys_skills[x+18])}")    
+    
 
 if __name__ == "__main__":
     print("Welcome to the World of Darkness")
