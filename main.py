@@ -86,6 +86,7 @@ def new_vampire():
         else:
             spez = input(f"Choose a specialty for {skill}: ")
             vampire.set_specialty(skill, spez)
+            break
 
     # step four - set disciplines
     print("\n\n4. Set your disciplines")
