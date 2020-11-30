@@ -27,6 +27,7 @@ class Vampire(json.JSONEncoder):
     __clan = ""
     __attributes = {}
     __skills = {}
+    __specialties = {}
     __disciplines = {}
     __health = {"total": None, "superficial": None, "aggravated": None}
     __willpower = {"total": None, "superficial": None, "aggravated": None}
@@ -53,6 +54,13 @@ class Vampire(json.JSONEncoder):
         else:
             print(f"There is no such skill: {skill}")
             return 0
+    
+    def get_specialty(self, skill):
+        """
+        test if skill has specialty
+        returns list if there is specialty
+        """
+        return self.__specialties.get(skill, None)
 
 
     def get_discipline(self, discipline):
@@ -114,6 +122,20 @@ class Vampire(json.JSONEncoder):
             self.__skills[skill] = value
         else:
             print(f"{skill} is not valid")
+    
+
+    def set_specialty(self, skill, specialty):
+        """
+        skill = key for skill
+        specialty = specialty in skill
+        """
+        if not skill in self.__skills:
+            raise Exception(f"{skill} is not skilled yet.")
+        else:
+            if not self.__specialties.get(skill, None):
+                self.__specialties[skill] = [].append(specialty)
+            else:
+                self.__specialties[skill].append(specialty)
     
 
     def set_discipline(self, discipline, value):
