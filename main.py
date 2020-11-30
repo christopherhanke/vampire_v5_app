@@ -1,5 +1,6 @@
 from vampire import Vampire
 
+
 def new_vampire():
     vampire = Vampire.new_Vampire()
     
@@ -42,14 +43,15 @@ def new_vampire():
     print("You can choose out of a list of 27 skills. Skills you learned \nare in range of one (1) to a later maximum of five (5)")
     print("At the beginning you can choose three skills at three (3x 3), five times two (5x 2) and seven times one (7x 1).")
     print("The skills are:")
-    print_skills()
+    print_all_skills()
     print()
     i = 0
     skl = [3, 3, 3, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1]
     while len(skl) != 0:
         skill = input("Choose a skill: ")
         if skill == "help":
-            print_skills()
+            print_all_skills()
+            print(f"\n{skl}\n")
         elif not skill in Vampire.keys_skills:
             print("Skill not valid. Enter 'help' for list of skills.")
             continue
@@ -68,11 +70,55 @@ def new_vampire():
     
     # set specials
     # TODO
+    print("\nNow you it's time for specialties.")
+    for item in ["academics", "craft", "performance", "science"]:
+        if vampire.get_skill(item):
+            spec = input(f"Choose a specialty for {item}: ")
+            vampire.set_specialty(item, spec)
+    while True:
+        skill = input("Choose a skill to specialize: ")
+        if skill == "help":
+            print_vamp_skills(vampire)
+            continue
+        elif vampire.get_skill(skill) == 0:
+            print(f"You don't have {skill} as a skill.")
+            continue
+        else:
+            spez = input(f"Choose a specialty for {skill}: ")
+            vampire.set_specialty(skill, spez)
 
     # step four - set disciplines
     print("\n\n4. Set your disciplines")
     print("You can choose two disciplines of the given list. One takes two points and the other one point.")
-
+    print_disciplines(vampire)
+    print()
+    i = 0
+    dsc = [2, 1]
+    while len(dsc) != 0:
+        discipline = input("Choose a discipline: ")
+        if discipline == "help":
+            print_disciplines(vampire)
+            continue
+        elif not discipline in Vampire.keys_disciplines:
+            print("Discipline not valid. Enter 'help' for list of skills.")
+            continue
+        elif not discipline in Vampire.clans.get(vampire.get_clan()) and vampire.get_clan() != "Caitiff":
+            print("Discipline not valid. Enter 'help' for list of skills.")
+            continue
+        elif discipline in Vampire.clans.get(vampire.get_clan()) and vampire.get_discipline(discipline) and vampire.get_clan() != "Caitiff":
+            print(f"You already chose {discipline} with {vampire.get_discipline(discipline)} points.")
+            continue
+        else:
+            try:
+                value = int(input(f"Set level for {discipline}: "))
+            except ValueError:
+                value = 0
+            if value in dsc:
+                vampire.set_discipline(discipline, value)
+                dsc.remove(value)
+            else:
+                print(f"Invalid value. {dsc}")
+    
     # step five - choose hunting trait
     # TODO
 
@@ -85,9 +131,30 @@ def print_attributes():
         print(f"{'{:<15}'.format(Vampire.keys_attributes[x])} | {'{:<15}'.format(Vampire.keys_attributes[x+3])} | {'{:<15}'.format(Vampire.keys_attributes[x+6])}")
 
 
-def print_skills():
+def print_all_skills():
     for x in range(9):
-        print(f"{'{:<15}'.format(Vampire.keys_skills[x])} | {'{:<15}'.format(Vampire.keys_skills[x+9])} | {'{:<15}'.format(Vampire.keys_skills[x+18])}")    
+        print(f"{'{:<15}'.format(Vampire.keys_skills[x])} | {'{:<15}'.format(Vampire.keys_skills[x+9])} | {'{:<15}'.format(Vampire.keys_skills[x+18])}")
+
+
+def print_vamp_skills(vampire):
+    skills = []
+    for key in Vampire.keys_skills:
+        if vampire.get_skill(key) != 0:
+            skills.append(key)
+    for i in range(len(skills)):
+        if i % 2 != 0:
+            print(f"{'{:<15}'.format(Vampire.keys_skills[x])} | ", end="")
+        else:
+            print(f"{'{:<15}'.format(Vampire.keys_skills[x])}")
+    
+
+def print_disciplines(vampire):
+    if vampire.get_clan() != "Caitiff":
+        disciplines = Vampire.clans.get(vampire.get_clan())
+        print(f"{'{:<15}'.format(disciplines[0])} | {'{:<15}'.format(disciplines[1])} | {'{:<15}'.format(disciplines[2])}")
+    else:
+        for x in range(5):
+            print(f"{'{:<15}'.format(Vampire.keys_disciplines[x])} | {'{:<15}'.format(Vampire.keys_disciplines[x+5])}")
     
 
 if __name__ == "__main__":
@@ -96,6 +163,7 @@ if __name__ == "__main__":
     while True:
         print("What do you want to do?")
         print(" [C]reate a new Vampire")
+        print(" [R]andomize a new Vampire")
         print(" [L]oad an old Vampire")
         selection = input(": ")
         selection = selection.lower()
@@ -104,7 +172,12 @@ if __name__ == "__main__":
             new_vampire()
             break
         elif selection == "l":
-            print("\n\n\nNot yet implemented")
-            break
+            print("\n\nNot yet implemented")
+            exit()
+        elif selection == "r":
+            print("\n\nNot yet implemented")
+            exit()
         else:
             print("Please enter a valid option. \n\n")
+    
+    print("Back to main.")
