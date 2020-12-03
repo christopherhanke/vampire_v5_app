@@ -1,4 +1,5 @@
-from vampire import Vampire
+import json
+from vampire import Vampire, Vampire_Encode
 
 
 def new_vampire():
@@ -71,7 +72,7 @@ def new_vampire():
     # set specials
     # TODO
     print("\nNow you it's time for specialties.")
-    for item in ["academics", "craft", "performance", "science"]:
+    for item in ["Academics", "Craft", "Performance", "Science"]:
         if vampire.get_skill(item):
             spec = input(f"Choose a specialty for {item}: ")
             vampire.set_specialty(item, spec)
@@ -85,7 +86,10 @@ def new_vampire():
             continue
         else:
             spez = input(f"Choose a specialty for {skill}: ")
-            vampire.set_specialty(skill, spez)
+            try:
+                vampire.set_specialty(skill, spez)
+            except Exception as err:
+                print(err.args)
             break
 
     # step four - set disciplines
@@ -125,6 +129,8 @@ def new_vampire():
 
     # step six - choose vantages
     # TODO
+
+    return vampire
     
 
 def print_attributes():
@@ -166,19 +172,40 @@ if __name__ == "__main__":
         print(" [C]reate a new Vampire")
         print(" [R]andomize a new Vampire")
         print(" [L]oad an old Vampire")
+        print(" [Q]uit")
         selection = input(": ")
         selection = selection.lower()
 
         if selection == "c":
-            new_vampire()
+            vampire = new_vampire()
             break
         elif selection == "l":
-            print("\n\nNot yet implemented")
-            exit()
+            print("\nNot yet implemented\n")
+            vampire = Vampire.new_Vampire()
+            break
         elif selection == "r":
-            print("\n\nNot yet implemented")
+            print("\nNot yet implemented [RANDOMIZE]\n")
+            break
+        elif selection == "q":
             exit()
         else:
             print("Please enter a valid option. \n\n")
     
-    print("Back to main.")
+    while True:
+        print("\n\nWelcome to the game.")
+        print(" [M]ake check")
+        print(" [S]how character stats")
+        print(" [Q]uit")
+        selection = input(": ")
+        selection = selection.lower()
+
+        if selection == "q":
+            exit()
+        elif selection == "m":
+            print("Not yet implemented")
+            continue
+        elif selection == "s":
+            print(Vampire_Encode().encode(vampire))
+            continue
+        else:
+            print("Please enter a valid option.\n\n")

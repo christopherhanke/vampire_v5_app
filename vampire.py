@@ -1,7 +1,7 @@
-import json
+from json import JSONEncoder
 from random import randint
 
-class Vampire(json.JSONEncoder):
+class Vampire():
     # static dictionary for the clans and their clan-disciplines
     clans = {
         "Brujah": ["Celerity", "Potence", "Presence"],
@@ -33,6 +33,20 @@ class Vampire(json.JSONEncoder):
     __willpower = {"total": None, "superficial": None, "aggravated": None}
     __hunger = None
     __humanity = None
+
+
+    # serialize method to encode instance date to JSON
+    def serialize(self):
+        vampire = dict()
+        vampire["clan"] = self.__clan
+        vampire["attributes"] = self.__attributes
+        vampire["skills"] = self.__skills
+        vampire["specialities"] = self.__specialties
+        vampire["health"] = self.__health
+        vampire["willpower"] = self.__willpower
+        vampire["hunger"] = self.__hunger
+        vampire["humanity"] = self.__humanity
+        return vampire
 
     
     # getter methods for instance variables
@@ -133,9 +147,9 @@ class Vampire(json.JSONEncoder):
             raise Exception(f"{skill} is not skilled yet.")
         else:
             if not self.__specialties.get(skill, None):
-                self.__specialties[skill] = [].append(specialty)
-            else:
-                self.__specialties[skill].append(specialty)
+                self.__specialties[skill] = []
+            
+            self.__specialties[skill].append(specialty)
     
 
     def set_discipline(self, discipline, value):
@@ -208,4 +222,9 @@ class Vampire(json.JSONEncoder):
         file contains path to file
         """
         return cls(file=file)
+
+
+class Vampire_Encode(JSONEncoder):
     
+    def default(self, o):
+        return o.serialize()
