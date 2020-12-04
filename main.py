@@ -131,7 +131,42 @@ def new_vampire():
     # TODO
 
     return vampire
-    
+
+
+def peek(vampire):
+    while True:
+        print("\nPeek - Menu")
+        print(" [A]ttributes")
+        print(" [C]lan")
+        print(" [D]isciplines")
+        print(" [S]kills")
+        print(" [Q]uit menu")
+        selection = input(": ")
+        selection = selection.lower()
+
+        if selection == "a":
+            for i in range(len(vampire.keys_attributes)):
+                key = vampire.keys_attributes[i]
+                value = ""
+                for _ in range(vampire.get_attribute(key)):
+                    value += "#"
+                print(f"{'{:<15}'.format(key)} {'{:<5}'.format(value)}", end="")
+                if (i+1) % 3 == 0:
+                    print()
+                else:
+                    print(" | ", end="")
+            pass
+        elif selection == "c":
+            print(f"Clan: {vampire.get_clan()}")
+        elif selection == "s":
+            pass
+        elif selection == "d":
+            pass
+        elif selection == "q":
+            break
+        else:
+            print("Please enter a valid option.")
+
 
 def print_attributes():
     for x in range(3):
@@ -182,6 +217,13 @@ if __name__ == "__main__":
         elif selection == "l":
             print("\nNot yet implemented\n")
             vampire = Vampire.new_Vampire()
+            try:
+                with open("save.json", "r") as save_file:
+                    data = json.loads(save_file.read())
+                    # print(data)
+                    vampire.deserialize(data)
+            except FileNotFoundError:
+                print("File not found!")
             break
         elif selection == "r":
             print("\nNot yet implemented [RANDOMIZE]\n")
@@ -192,9 +234,10 @@ if __name__ == "__main__":
             print("Please enter a valid option. \n\n")
     
     while True:
-        print("\n\nWelcome to the game.")
+        print("\n\nGame - Main Menu.")
         print(" [M]ake check")
-        print(" [S]how character stats")
+        print(" [P]eek stats")
+        print(" [S]ave character stats")
         print(" [Q]uit")
         selection = input(": ")
         selection = selection.lower()
@@ -204,8 +247,17 @@ if __name__ == "__main__":
         elif selection == "m":
             print("Not yet implemented")
             continue
+        elif selection == "p":
+            peek(vampire)
+            continue
         elif selection == "s":
-            print(Vampire_Encode().encode(vampire))
+            try:
+                with open("save.json", "w") as save_file:
+                    save_file.write(Vampire_Encode().encode(vampire))
+            except FileNotFoundError:
+                print(Vampire_Encode().encode(vampire))
+            else:
+                print("Data saved.")
             continue
         else:
             print("Please enter a valid option.\n\n")
