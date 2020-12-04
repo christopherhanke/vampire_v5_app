@@ -1,4 +1,4 @@
-from json import JSONEncoder
+from json import JSONEncoder, JSONDecoder
 from random import randint
 
 class Vampire():
@@ -33,11 +33,13 @@ class Vampire():
     __willpower = {"total": None, "superficial": None, "aggravated": None}
     __hunger = None
     __humanity = None
+    __name = ""
 
 
     # serialize method to encode instance date to JSON
     def serialize(self):
         vampire = dict()
+        vampire["name"] = self.__name
         vampire["clan"] = self.__clan
         vampire["attributes"] = self.__attributes
         vampire["skills"] = self.__skills
@@ -47,8 +49,35 @@ class Vampire():
         vampire["hunger"] = self.__hunger
         vampire["humanity"] = self.__humanity
         return vampire
-
     
+
+    # deserialize method to set data from JSON to class instance
+    def deserialize(self, data):
+        """
+        data = JSON string with serialized data of a vampire instance
+        """
+        data = dict(data)
+        for key in data.keys():
+            if key == "name":
+                self.set_name(data.get(key))
+            elif key == "clan":
+                self.set_clan(data.get(key))
+            elif key == "attributes":
+                self.__attributes = data.get(key)
+            elif key == "skills":
+                pass
+            elif key == "specialties":
+                pass
+            elif key == "health":
+                pass
+            elif key == "willpower":
+                pass
+            elif key == "hunger":
+                self
+            elif key == "humanity":
+                pass
+    
+
     # getter methods for instance variables
     def get_clan(self):
         return self.__clan
@@ -115,6 +144,10 @@ class Vampire():
         return current
     
 
+    def get_name(self):
+        return self.__name
+    
+
     # setter methods for instance variables
     def set_attribute(self, attribute, value):
         """
@@ -171,8 +204,16 @@ class Vampire():
             self.__clan = clan
         else:
             print(f"{clan} is not valid")
+    
+
+    def set_name(self, name):
+        """
+        name = Name of the Vampire
+        """
+        self.__name = name
 
 
+    # dice functions
     def __d10(self):
         return randint(1,10)
     
@@ -190,13 +231,24 @@ class Vampire():
 
 
     def rouse_check(self):
+        """
+        make rouse check.
+        Increases hunger if check fails and returns True.
+        Throws Exception if rouse check isn't possible (e.g. Hunger is at five).
+        Returns False if nothing happend.
+        """
         check = self.__d10()
-        if check < 6 and self.get_hunger() < 5:
-            self.__hunger += 1
-        elif check < 6 and self.get_hunger >= 5:
+        if hunger >= 5:
             raise Exception()
+        elif check < 6 and self.get_hunger() < 5:
+            self.__hunger += 1
+            return True
+        else:
+            return False
+        
 
-
+    
+    # CONSTRUCTORS
     # setting __init__ for constructors
     def __init__(self, **kwargs):
         if "file" in kwargs:
