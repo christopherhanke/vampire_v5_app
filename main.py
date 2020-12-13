@@ -2,7 +2,7 @@ import json
 from vampire import Vampire, Vampire_Encode
 
 
-def new_vampire():
+def create_vampire():
     vampire = Vampire.new_Vampire()
     
     # step one - choose a clan
@@ -41,13 +41,30 @@ def new_vampire():
     
     # step three - set skills
     print("\n\n3. Set your skill")
-    print("You can choose out of a list of 27 skills. Skills you learned \nare in range of one (1) to a later maximum of five (5)")
-    print("At the beginning you can choose three skills at three (3x 3), five times two (5x 2) and seven times one (7x 1).")
+    print("You'll choose your skills out of a list of 27 skills, which will later \nrange up to a maximum level of five. Therefore you have to choose one \nof three templates.")
+    print("You can choose between three templates. Jack of all trades / Balanced / Specialist.")
+    print("[J]ack - (1x 3), (8x 2), (10x 1)")
+    print("[B]alanced - (3x 3), (5x 2), (7x 1).")
+    print("[S]pecialist - (1x 4), (3x 3), (3x 2), (3x 1)")
+    while True:
+        temp = input(">> ").lower()
+        if temp == "j":
+            skl = [3,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1]
+            break
+        elif temp == "b":
+            skl = [3,3,3,2,2,2,2,2,1,1,1,1,1,1,1]
+            break
+        elif temp == "s":
+            skl = [4,3,3,3,2,2,2,1,1,1]
+            break
+        else:
+            print("Input was invalid. Please choose a template [B/J/S].")
+    
     print("The skills are:")
     print_all_skills()
     print()
-    i = 0
-    skl = [3, 3, 3, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1]
+    # i = 0
+    
     while len(skl) != 0:
         skill = input("Choose a skill: ")
         if skill == "help":
@@ -212,14 +229,14 @@ if __name__ == "__main__":
         selection = selection.lower()
 
         if selection == "c":
-            vampire = new_vampire()
+            vampire = create_vampire()
             break
         elif selection == "l":
             vampire = Vampire.new_Vampire_from_file("save.json")
             break
         elif selection == "r":
             print("\nNot yet implemented [RANDOMIZE]\n")
-            break
+            continue
         elif selection == "q":
             exit()
         else:
