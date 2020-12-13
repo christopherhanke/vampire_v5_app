@@ -2,6 +2,7 @@ import json
 from vampire import Vampire, Vampire_Encode
 
 
+# create a new vampire on prompt
 def create_vampire():
     vampire = Vampire.new_Vampire()
     
@@ -138,6 +139,8 @@ def create_vampire():
             else:
                 print(f"Invalid value. {dsc}")
     
+    # TODO - adding discipline Traits
+    
     # step five - choose hunting trait
     # TODO - for now not implementing. creation only for new vampires
 
@@ -190,9 +193,15 @@ def peek_charactersheet(vampire):
         list_dsc[key]=s
     
     for dsc in list_dsc.keys():
-        print(list_dsc.get(dsc), " |")
+        print(list_dsc.get(dsc), " | ", end="")
+        traits = ""
         for i in range(vampire.get_discipline(dsc)):
-            print(f"Trait {i+1}")
+            if i == 0:
+                traits = str(i)
+            else:
+                traits = traits + ", " + str(i)
+            
+        print(traits)
     print()
 
     # TODO - print vantages
