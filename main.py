@@ -5,7 +5,8 @@ from vampire import Vampire, Vampire_Encode
 # create a new vampire on prompt
 def create_vampire():
     vampire = Vampire.new_Vampire()
-    
+    print("\nHello!\nTell me your name.")
+    vampire.set_name(input(": "))
     # step one - choose a clan
     print("\n\n1. Choose a clan")
     for key in Vampire.clans.keys():
@@ -135,7 +136,6 @@ def create_vampire():
             if value in dsc:
                 vampire.set_discipline(discipline, value)
                 dsc.remove(value)
-                print(discipline, value, vampire.get_discipline(discipline), sep=" | ")
             else:
                 print(f"Invalid value. {dsc}")
     
@@ -143,9 +143,47 @@ def create_vampire():
     
     # step five - choose hunting trait
     # TODO - for now not implementing. creation only for new vampires
+    print("\n\n5. Set hunting traits")
+    print("Freshlings won't have hunting traits yet. They have still to learn.")
+    print("For now you still have to learn to hunt.")
 
     # step six - choose vantages
     # TODO
+    print("\n\n6. Choose vantages")
+    print('{:-^30}'.format("This is not yet implemented."))
+
+    # step seven - finalization
+    # setting hunger and humanity
+    print("\n\n7. Final steps")
+    print("Is there anything that stirrs your hunger? [Y/N]")
+    while True:
+        hunger = input(": ").lower()
+        if hunger == "n":
+            vampire.set_hunger(1)
+            break
+        elif hunger == "y":
+            vampire.set_hunger(2)
+            break
+        else:
+            print("Please enter a valid option.")
+    
+    print("\nDid you strife from human morals? [Y/N]")
+    while True:
+        human = input(": ").lower()
+        if human == "n":
+            vampire.set_humanity(7)
+            break
+        elif human == "y":
+            vampire.set_humanity(6)
+            break
+        else:
+            print("Please enter a valid option.")
+
+    vampire.set_health()
+    print(f"\nYour current health is: {vampire.get_health()}")
+
+    vampire.set_willpower()
+    print(f"Your current willpower is: {vampire.get_willpower()}")
 
     return vampire
 

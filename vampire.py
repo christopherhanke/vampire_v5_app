@@ -30,10 +30,11 @@ class Vampire():
     __skills = {}
     __specialties = {}
     __disciplines = {}
-    __health = {"total": None, "superficial": None, "aggravated": None}
-    __willpower = {"total": None, "superficial": None, "aggravated": None}
+    __health = {"total": 0, "superficial": 0, "aggravated": 0}
+    __willpower = {"total": 0, "superficial": 0, "aggravated": 0}
     __hunger = None
     __humanity = None
+    __flaws = None
     __name = ""
 
 
@@ -50,6 +51,7 @@ class Vampire():
         vampire["willpower"] = self.__willpower
         vampire["hunger"] = self.__hunger
         vampire["humanity"] = self.__humanity
+        vampire["flaws"] = self.__flaws
         return vampire
     
 
@@ -88,12 +90,26 @@ class Vampire():
                     self.set_discipline(dsc, data.get(key).get(dsc))
                     
             elif key == "health":
-                pass
+                keys = list(data.get(key).keys())
+                for k in keys:
+                    if k in self.__willpower.keys():
+                        self.__willpower[key] = data.get(key).get(k)
+
             elif key == "willpower":
-                pass
+                keys = list(data.get(key).keys())
+                for k in keys:
+                    if k in self.__willpower.keys():
+                        self.__willpower[key] = data.get(key).get(k)
+                
             elif key == "hunger":
-                self
+                if not self.__hunger:
+                    self.set_hunger(data.get(key))
+                
             elif key == "humanity":
+                if not self.__humanity:
+                    self.set_humanity(data.get(key))
+
+            elif key == "flaws":
                 pass
     
 
@@ -149,25 +165,25 @@ class Vampire():
     
 
     def get_willpower(self):
-        total = self.__willpower.get("total", 0)
-        superficial = self.__willpower("superficial", 0)
-        aggravated = self.__willpower("aggravated", 0)
+        total = self.__willpower.get("total")
+        superficial = self.__willpower.get("superficial")
+        aggravated = self.__willpower.get("aggravated")
         if total > (superficial + aggravated):
-            current = total - (superficial + aggravated)
+            return total - (superficial + aggravated)
         else:
-            current = 0
-        return current
+            return 0
+    # TODO - make up mind if total health is reasonable or if list of all three is of more use
     
 
     def get_health(self):
-        total = self.__health.get("total", 0)
-        superficial = self.__health.get("superficial", 0)
-        aggravated = self.__helath.get("aggravated", 0)
+        total = self.__health.get("total")
+        superficial = self.__health.get("superficial")
+        aggravated = self.__health.get("aggravated")
         if total > (superficial + aggravated):
-            current = total - (superficial + aggravated)
+            return total - (superficial + aggravated)
         else:
-            current = 0
-        return current
+            return 0
+    # TODO - make up mind if total health is reasonable or if list of all three is of more use
     
 
     def get_name(self):
@@ -245,7 +261,30 @@ class Vampire():
         name = Name of the Vampire
         """
         self.__name = name
+    
 
+    def set_hunger(self, value):
+        """
+        value = hunger value
+        use this function only for initialization
+        """
+        self.__hunger = value
+    
+
+    def set_humanity(self, value):
+        """
+        value = humanity value
+        use this function only for initialization
+        """
+        self.__humanity = value
+    
+
+    def set_health(self):
+        self.__health["total"] = self.__attributes.get("Stamina") + 3
+
+
+    def set_willpower(self):
+        self.__willpower["total"] = self.__attributes.get("Composure") + self.__attributes.get("Resolve")
 
     # dice functions
     def __d10(self):
