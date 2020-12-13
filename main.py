@@ -87,7 +87,6 @@ def create_vampire():
                 print(f"Invaldi value. {skl}")
     
     # set specials
-    # TODO
     print("\nNow you it's time for specialties.")
     for item in ["Academics", "Craft", "Performance", "Science"]:
         if vampire.get_skill(item):
@@ -142,7 +141,7 @@ def create_vampire():
                 print(f"Invalid value. {dsc}")
     
     # step five - choose hunting trait
-    # TODO
+    # TODO - for now not implementing. creation only for new vampires
 
     # step six - choose vantages
     # TODO
@@ -150,39 +149,73 @@ def create_vampire():
     return vampire
 
 
-def peek(vampire):
-    while True:
-        print("\nPeek - Menu")
-        print(" [A]ttributes")
-        print(" [C]lan")
-        print(" [D]isciplines")
-        print(" [S]kills")
-        print(" [Q]uit menu")
-        selection = input(": ")
-        selection = selection.lower()
+def peek_charactersheet(vampire):
+    # print character infos
+    print('{:*^66}'.format(" Character "))
+    print(f"Clan: {vampire.get_clan()}")
+    print()
+    
+    # print attributes
+    print('{:*^66}'.format(" Attributes "))
+    attr = []
+    for i in range(len(vampire.keys_attributes)):
+        key = vampire.keys_attributes[i]
+        value = ""
+        for _ in range(vampire.get_attribute(key)):
+            value += "*"
+        s = '{:<15}'.format(key) + '{:<5}'.format(value)
+        if i < 6:
+            s = s + " | "
+        attr.append(s)
 
-        if selection == "a":
-            for i in range(len(vampire.keys_attributes)):
-                key = vampire.keys_attributes[i]
-                value = ""
-                for _ in range(vampire.get_attribute(key)):
-                    value += "*"
-                print(f"{'{:<15}'.format(key)} {'{:<5}'.format(value)}", end="")
-                if (i+1) % 3 == 0:
-                    print()
-                else:
-                    print(" | ", end="")
-            pass
-        elif selection == "c":
-            print(f"Clan: {vampire.get_clan()}")
-        elif selection == "s":
-            pass
-        elif selection == "d":
-            pass
-        elif selection == "q":
-            break
+    for i in range(3):
+        s_out = attr[i] + attr[i+3] + attr[i+6]
+        print(s_out)
+    print()
+
+    # print skills
+    print('{:*^66}'.format(" Skills "))
+    skl = []
+    for i in range(len(vampire.keys_skills)):
+        key = vampire.keys_skills[i]
+        value = ""
+        for _ in range(vampire.get_skill(key)):
+            value += "*"
+        s = '{:<15}'.format(key) + '{:<5}'.format(value)
+        if i < 18:
+            s = s + " | "
+        skl.append(s)
+    
+    for i in range(9):
+        s_out = skl[i] + skl[i+9] + skl[i+18]
+        print(s_out)
+    print()
+
+    #TODO - specialties 
+
+    # print disciplines
+    print('{:*^66}'.format(" Disciplines "))
+    dsc = []
+    for i in range(len(vampire.get_discipline_keys())):
+        key = vampire.get_discipline_keys()[i]
+        value = ""
+        for _ in range(vampire.get_discipline(key)):
+            value += "*"
+        s = '{:<15}'.format(key) + '{:<5}'.format(value)
+        dsc.append(s)
+    print(dsc)
+    
+    s_out = ""
+    i = 0
+    while dsc:
+        s_out = s_out + dsc.pop()
+        if dsc and i == 0:
+            s_out = s_out + " | "
+            i = 1
         else:
-            print("Please enter a valid option.")
+            s_out = s_out + "\n"
+            i = 0
+    print()
 
 
 def print_attributes():
@@ -245,7 +278,7 @@ if __name__ == "__main__":
     while True:
         print("\n\nGame - Main Menu.")
         print(" [M]ake check")
-        print(" [P]eek stats")
+        print(" [P]eek Character sheet")
         print(" [S]ave character stats")
         print(" [Q]uit")
         selection = input(": ")
@@ -257,7 +290,7 @@ if __name__ == "__main__":
             print("Not yet implemented")
             continue
         elif selection == "p":
-            peek(vampire)
+            peek_charactersheet(vampire)
             continue
         elif selection == "s":
             try:

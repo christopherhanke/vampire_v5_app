@@ -45,6 +45,7 @@ class Vampire():
         vampire["attributes"] = self.__attributes
         vampire["skills"] = self.__skills
         vampire["specialities"] = self.__specialties
+        vampire["disciplines"] = self.__disciplines
         vampire["health"] = self.__health
         vampire["willpower"] = self.__willpower
         vampire["hunger"] = self.__hunger
@@ -57,18 +58,24 @@ class Vampire():
         """
         data = JSON string with serialized data of a vampire instance
         """
+        #TODO - implement deserialize of all keys
+
         data = dict(data)
         for key in data.keys():
             if key == "name":
                 self.set_name(data.get(key))
             elif key == "clan":
                 self.set_clan(data.get(key))
+                print("Test clan")
             elif key == "attributes":
                 self.__attributes = data.get(key)
             elif key == "skills":
                 pass
             elif key == "specialties":
                 pass
+            elif key == "disciplines":
+                self.__disciplines = data.get(key)
+                print("Test disciplines")
             elif key == "health":
                 pass
             elif key == "willpower":
@@ -147,6 +154,10 @@ class Vampire():
 
     def get_name(self):
         return self.__name
+    
+
+    def get_discipline_keys(self):
+        return list(self.__disciplines.keys())
     
 
     # setter methods for instance variables
@@ -259,7 +270,7 @@ class Vampire():
                     self.deserialize(data)
             except FileNotFoundError:
                 print("File not found.")
-            
+        
         else:
             pass
     
