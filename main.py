@@ -137,6 +137,7 @@ def create_vampire():
             if value in dsc:
                 vampire.set_discipline(discipline, value)
                 dsc.remove(value)
+                print(discipline, value, vampire.get_discipline(discipline), sep=" | ")
             else:
                 print(f"Invalid value. {dsc}")
     
@@ -195,26 +196,17 @@ def peek_charactersheet(vampire):
 
     # print disciplines
     print('{:*^66}'.format(" Disciplines "))
-    dsc = []
+    list_dsc = []
     for i in range(len(vampire.get_discipline_keys())):
         key = vampire.get_discipline_keys()[i]
         value = ""
         for _ in range(vampire.get_discipline(key)):
             value += "*"
         s = '{:<15}'.format(key) + '{:<5}'.format(value)
-        dsc.append(s)
-    print(dsc)
+        list_dsc.append(s)
     
-    s_out = ""
-    i = 0
-    while dsc:
-        s_out = s_out + dsc.pop()
-        if dsc and i == 0:
-            s_out = s_out + " | "
-            i = 1
-        else:
-            s_out = s_out + "\n"
-            i = 0
+    for dsc in list_dsc:
+        print(dsc, " |")
     print()
 
 

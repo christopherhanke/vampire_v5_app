@@ -64,18 +64,28 @@ class Vampire():
         for key in data.keys():
             if key == "name":
                 self.set_name(data.get(key))
+
             elif key == "clan":
                 self.set_clan(data.get(key))
-                print("Test clan")
+
             elif key == "attributes":
                 self.__attributes = data.get(key)
+
             elif key == "skills":
-                pass
+                skls = list(data.get(key).keys())
+                for skl in skls:
+                    self.set_skill(skl, data.get(key).get(skl))
+
             elif key == "specialties":
-                pass
+                specs = list(data.get(key).keys())
+                for spec in specs:
+                    self.set_specialty(spec, data.get(key).get(spec))
+
             elif key == "disciplines":
-                self.__disciplines = data.get(key)
-                print("Test disciplines")
+                dscs = list(data.get(key).keys())
+                for dsc in dscs:
+                    self.set_discipline(dsc, data.get(key).get(dsc))
+                    
             elif key == "health":
                 pass
             elif key == "willpower":
