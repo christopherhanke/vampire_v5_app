@@ -238,6 +238,7 @@ def print_all_skills(vampire):
     print()
 
 
+# prints only learned skills
 def print_skills_learned(vampire):
     skills = []
     for key in Vampire.keys_skills:
@@ -250,6 +251,7 @@ def print_skills_learned(vampire):
             print(f"{'{:<15}'.format(Vampire.keys_skills[x])}")
     
 
+# prints all avaible disciplines to learn
 def print_disciplines(vampire):
     if vampire.get_clan() != "Caitiff":
         disciplines = Vampire.clans.get(vampire.get_clan())
