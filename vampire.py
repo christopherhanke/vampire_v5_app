@@ -44,7 +44,7 @@ class Vampire():
         vampire["clan"] = self.__clan
         vampire["attributes"] = self.__attributes
         vampire["skills"] = self.__skills
-        vampire["specialities"] = self.__specialties
+        vampire["specialties"] = self.__specialties
         vampire["disciplines"] = self.__disciplines
         vampire["health"] = self.__health
         vampire["willpower"] = self.__willpower
@@ -79,7 +79,8 @@ class Vampire():
             elif key == "specialties":
                 specs = list(data.get(key).keys())
                 for spec in specs:
-                    self.set_specialty(spec, data.get(key).get(spec))
+                    for s in data.get(key).get(spec):
+                        self.set_specialty(spec, s)
 
             elif key == "disciplines":
                 dscs = list(data.get(key).keys())
@@ -102,11 +103,18 @@ class Vampire():
     
 
     def get_attribute(self, attribute):
-        if attribute in self.keys_attributes:
+        """
+        return value of attribute
+        if attribute is not initialized return 0
+        if value of attribute is invalid return None
+        """
+        if attribute in self.__attributes.keys():
             return self.__attributes.get(attribute)
+        elif attribute in self.keys_attributes:
+            return 0
         else:
             print(f"There is no such attribute: {attribute}")
-            return 0
+            return None
     
 
     def get_skill(self, skill):
@@ -121,7 +129,7 @@ class Vampire():
         test if skill has specialty
         returns list if there is specialty
         """
-        return self.__specialties.get(skill, None)
+        return self.__specialties.get(skill)
 
 
     def get_discipline(self, discipline):
@@ -166,6 +174,10 @@ class Vampire():
         return self.__name
     
 
+    def get_specialties_keys(self):
+        return list(self.__specialties.keys())
+
+    
     def get_discipline_keys(self):
         return list(self.__disciplines.keys())
     
