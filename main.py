@@ -149,7 +149,7 @@ def peek(vampire):
                 key = vampire.keys_attributes[i]
                 value = ""
                 for _ in range(vampire.get_attribute(key)):
-                    value += "#"
+                    value += "*"
                 print(f"{'{:<15}'.format(key)} {'{:<5}'.format(value)}", end="")
                 if (i+1) % 3 == 0:
                     print()
@@ -215,15 +215,7 @@ if __name__ == "__main__":
             vampire = new_vampire()
             break
         elif selection == "l":
-            print("\nNot yet implemented\n")
-            vampire = Vampire.new_Vampire()
-            try:
-                with open("save.json", "r") as save_file:
-                    data = json.loads(save_file.read())
-                    # print(data)
-                    vampire.deserialize(data)
-            except FileNotFoundError:
-                print("File not found!")
+            vampire = Vampire.new_Vampire_from_file("save.json")
             break
         elif selection == "r":
             print("\nNot yet implemented [RANDOMIZE]\n")

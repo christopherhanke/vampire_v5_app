@@ -1,3 +1,4 @@
+import json
 from json import JSONEncoder, JSONDecoder
 from random import randint
 
@@ -252,10 +253,15 @@ class Vampire():
     # setting __init__ for constructors
     def __init__(self, **kwargs):
         if "file" in kwargs:
-            #TODO
-            print(f"File to get... {kwargs['file']}")
+            try:
+                with open(kwargs.get("file"), "r") as file:
+                    data = json.loads(file.read())
+                    self.deserialize(data)
+            except FileNotFoundError:
+                print("File not found.")
+            
         else:
-            print("Embrace begins... ")
+            pass
     
 
     # classmethods for constructors
